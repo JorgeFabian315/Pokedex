@@ -1,0 +1,135 @@
+﻿<UserControl x:Class="Pokedex.Views.EntrenadoresViews.EntrenadoresView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:convert="clr-namespace:Pokedex.Helpers"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Pokedex.Views.EntrenadoresViews"
+             mc:Ignorable="d"
+             x:Name="VariableEn"
+             d:DesignHeight="450"
+             d:DesignWidth="1200">
+    <UserControl.Resources>
+        <convert:ConvertidorMasculinoFemenino x:Key="ConvertMF" />
+        
+    </UserControl.Resources>
+    <DockPanel Margin="25,0,0,0">
+        <WrapPanel DockPanel.Dock="Top">
+            <TextBlock DockPanel.Dock="Left"
+                       Style="{StaticResource TitulosPoke}"
+                       Text="Entrenadores Pokemon"
+                       HorizontalAlignment="Left" />
+            <Button Height="50"
+                    
+                    Command="{Binding VerAgregarEntrenadorCommand}">
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Background"
+                                Value="{StaticResource Color1}" />
+                        <Setter Property="HorizontalAlignment"
+                                Value="Right" />
+                        <Setter Property="Margin"
+                                Value="350,10,10,10" />
+                        <Setter Property="Cursor"
+                                Value="Hand" />
+                        <Setter Property="Width"
+                                Value="250" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                            Padding="4"
+                                            CornerRadius="15">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                          HorizontalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Resources>
+                <WrapPanel>
+                    <Image Source="/Assets/entrenador.png" />
+                    <TextBlock Text="Aagregar entrenador"
+                               Foreground="GhostWhite"
+                               VerticalAlignment="Center"
+                               Margin="10,0"
+                               FontSize="18"
+                               FontWeight="Light"
+                               TextWrapping="Wrap" />
+                </WrapPanel>
+            </Button>
+        </WrapPanel>
+        <ScrollViewer Margin="0,20"
+                      Background="Transparent"
+                      HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl ItemsSource="{Binding ListaEntrenadores}"
+                          Background="Transparent">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White"
+                                BorderBrush="Black"
+                                Width="240"
+                                Margin="10"
+                                BorderThickness="1"
+                                CornerRadius="5"
+                                Height="240">
+                            <Grid>
+                                <StackPanel VerticalAlignment="Center"
+                                            Margin="0,10,0,0">
+                                    <WrapPanel>
+                                        <Border CornerRadius="60"
+                                                Height="10"
+                                                Width="10"
+                                                Margin="15,0,0,0"
+                                                Background="Green" />
+                                        <TextBlock Text="Online"
+                                                   Foreground="Green"
+                                                   FontWeight="Light"
+                                                   Margin="10,0" />
+                                    </WrapPanel>
+                                    <Ellipse Width="140"
+                                             Height="140">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="{Binding Sexo,Converter={StaticResource ConvertMF}}" />
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <TextBlock Text="{Binding Nombre}"
+                                               HorizontalAlignment="Center"
+                                               FontSize="25"
+                                               FontWeight="Light"
+                                               Margin="0,10,0,0" />
+                                    <TextBlock Text="{Binding EdadCompleta}"
+                                               HorizontalAlignment="Right"
+                                               FontSize="15"
+                                               FontWeight="Light"
+                                               Margin="30,0" />
+                                </StackPanel>
+                                <Button Width="25"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Right"
+                                        Margin="10"
+                                        Command="{Binding Source={x:Reference VariableEn}, 
+                                    Path=DataContext.VerEliminarEntrenadorCommand}"
+                                        CommandParameter="{Binding Id}"
+                                        Height="25">
+                                    <fa:ImageAwesome Icon="Trash"
+                                                     Foreground="{StaticResource Color1}"
+                                                     />
+                                </Button>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>
