@@ -1,55 +1,234 @@
 ﻿<UserControl x:Class="Pokedex.Views.PokemonsViews.AgregarPokemonView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Pokedex.Views.PokemonsViews"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d"
+             d:DesignHeight="650"
+             d:DesignWidth="1200">
+    <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin"
+                    Value="15,0,0,0" />
+            <Setter Property="FontSize"
+                    Value="20" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Left" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="Height"
+                    Value="35" />
+            <Setter Property="Width"
+                    Value="500" />
+            <Setter Property="FontFamily"
+                    Value="Poppins" />
+            <Setter Property="FontWeight"
+                    Value="Light" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize"
+                    Value="20" />
+            <Setter Property="Margin"
+                    Value="15,0,0,0" />
+            <Setter Property="Width"
+                    Value="500" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Left" />
+            <Setter Property="Height"
+                    Value="35" />
+            <Setter Property="FontFamily"
+                    Value="Poppins" />
+            <Setter Property="FontWeight"
+                    Value="Light" />
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <StackPanel>
-            <TextBlock Text="Nombre:"/>
-            <TextBox Text="{Binding Pokemon.Nombre}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".2*" />
+            <RowDefinition Height=".6*" />
+            <RowDefinition Height=".2*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBlock Style="{StaticResource TitulosPoke}"
+                   Text="Agregar pokemon"
+                   Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center" />
+        <StackPanel HorizontalAlignment="Left"
+                    Grid.Row="1"
+                    Margin="20,0,0,0"
+                    Grid.RowSpan="2">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin"
+                            Value="15,5,0,3" />
+                    <Setter Property="FontSize"
+                            Value="20" />
+                    <Setter Property="HorizontalAlignment"
+                            Value="Left" />
+                    <Setter Property="VerticalAlignment"
+                            Value="Center" />
+                    <Setter Property="Height"
+                            Value="35" />
+                    <Setter Property="Width"
+                            Value="500" />
+                    <Setter Property="FontFamily"
+                            Value="Poppins" />
+                    <Setter Property="FontWeight"
+                            Value="Light" />
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock>
+                <Run Text="Entrenador: " />
+                <Run Text="{Binding Entrenador.Nombre}"
+                     FontWeight="SemiBold" /></TextBlock>
+            <TextBlock Text="Nombre:" />
+            <TextBox Text="{Binding Pokemon.Nombre}" />
             <TextBlock Text="Peso:" />
-            <TextBox Text="{Binding Pokemon.Peso}" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding Pokemon.Peso}"
+                         Width="100" />
+                <TextBlock Text="KG"
+                           VerticalAlignment="Center" />
+            </StackPanel>
             <TextBlock Text="Número:" />
             <TextBox Text="{Binding Pokemon.Numero}" />
             <TextBlock Text="Habilidad:" />
             <TextBox Text="{Binding Pokemon.Habilidad}" />
-            <TextBlock Text="Entrenador:" />
-            <TextBlock Text="{Binding Entrenador.Nombre}" />
-            <TextBlock Text="Tipo" />
+            <TextBlock Text="Tipo:" />
             <ComboBox ItemsSource="{Binding ListaTipos}"
                       DisplayMemberPath="Nombre"
                       SelectedIndex="0"
                       x:Name="cmbTipos"
                       SelectedValuePath="Id" />
-            <WrapPanel Grid.Row="2"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center">
-                <Button Tag="{StaticResource Color1}"
-                        Style="{StaticResource EstilosAgregarCancelar}"
-                        CommandParameter="{Binding ElementName=cmbTipos,
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Margin="0,5,0,0"
+                    Grid.Column="1">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin"
+                            Value="15,5,0,3" />
+                    <Setter Property="FontSize"
+                            Value="20" />
+                    <Setter Property="HorizontalAlignment"
+                            Value="Left" />
+                    <Setter Property="VerticalAlignment"
+                            Value="Center" />
+                    <Setter Property="Height"
+                            Value="35" />
+                    <Setter Property="Width"
+                            Value="500" />
+                    <Setter Property="FontFamily"
+                            Value="Poppins" />
+                    <Setter Property="FontWeight"
+                            Value="Light" />
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock Text="Descripción:" />
+            <TextBox Height="150"
+                     VerticalContentAlignment="Top"
+                     Text="{Binding Pokemon.Descripcion}"
+                     TextWrapping="Wrap" />
+        </StackPanel>
+        <WrapPanel Grid.Row="2"
+                   Grid.Column="1"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Bottom"
+                   Margin="10">
+            <Button Tag="{StaticResource Color1}"
+                    Style="{StaticResource EstilosAgregarCancelar}"
+                    CommandParameter="{Binding ElementName=cmbTipos,
                 Path=SelectedValue}"
-                        Command="{Binding AgregarPokemonCommand}">
-                    <TextBlock Text="Agregar"
-                               Foreground="White"
+                    Command="{Binding AgregarPokemonCommand}">
+                <TextBlock Text="Agregar"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           FontSize="20"
+                           FontWeight="Light" />
+            </Button>
+            <Button Tag="{StaticResource Color3}"
+                    Style="{StaticResource EstilosAgregarCancelar}"
+                    Command="{Binding RegresarCommand}">
+                <TextBlock Text="Cancelar"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           FontSize="20"
+                           FontWeight="Light" />
+            </Button>
+        </WrapPanel>
+        <Grid Grid.ColumnSpan="2"
+              Grid.RowSpan="3">
+            <Grid.Resources>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding MostrarErrores}"
+                                     Value="true">
+                            <Setter Property="Visibility"
+                                    Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding MostrarErrores}"
+                                     Value="false">
+                            <Setter Property="Visibility"
+                                    Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Resources>
+            
+            <Border Background="Black"
+                    Opacity=".35" x:Name="fondonegro"
+                    MouseDown="fondonegro_MouseDown"/>
+            <Border VerticalAlignment="Center"
+                    Width="800"
+                    Height="500"
+                    CornerRadius="10"
+                    Background="{StaticResource Color2}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".15*"/>
+                        <RowDefinition Height=".6*"/>
+                        <RowDefinition Height=".25*"/>
+                    </Grid.RowDefinitions>
+                    <Border Background="{StaticResource Color1}"
+                            CornerRadius="10,10,0,0" />
+                    <TextBlock Text="Errores"
                                VerticalAlignment="Center"
-                               FontSize="20"
+                               FontSize="30"
+                               Margin="10,0,0,0"
                                HorizontalAlignment="Center"
-                               FontWeight="Light" />
-                </Button>
-                <Button Tag="{StaticResource Color3}"
-                        Style="{StaticResource EstilosAgregarCancelar}"
-                        Command="{Binding RegresarCommand}">
-                    <TextBlock Text="Cancelar"
-                               Foreground="White"
-                               VerticalAlignment="Center"
-                               FontSize="20"
-                               HorizontalAlignment="Center"
-                               FontWeight="Light" />
-                </Button>
-            </WrapPanel>
-        </StackPanel>  
+                               Foreground="White" />
+                    <ScrollViewer Grid.Row="1">
+                        <TextBlock Text="{Binding Error}"
+                                   Foreground="Red"
+                                   FontSize="25"
+                                   Margin="0,20,0,0"
+                                   FontWeight="Light"/>
+                    </ScrollViewer>
+                        <Button Tag="{StaticResource Color1}"
+                                Style="{StaticResource EstilosAgregarCancelar}"
+                            Command="{Binding MostrarErroresCommad}"
+                                CommandParameter=""
+                                Grid.Row="2"
+                                HorizontalAlignment="Right">
+                            <TextBlock Text="Ok"
+                                       Foreground="White"
+                                       VerticalAlignment="Center"
+                                       FontSize="35"
+                                       FontWeight="Light" />
+                        </Button>
+                     
+                </Grid>
+
+            </Border>
+            
+            
+        </Grid>
+        
     </Grid>
 </UserControl>

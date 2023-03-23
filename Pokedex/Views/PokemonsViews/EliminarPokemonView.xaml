@@ -6,16 +6,27 @@
              xmlns:local="clr-namespace:Pokedex.Views.PokemonsViews"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="{Binding Pokemon.Nombre}"
-                   FontSize="20"/>
+    <StackPanel Background="Transparent"
+                Margin="30,0,20,0">
+        <TextBlock Style="{StaticResource TitulosPoke}"
+                   Text="Eliminar pokémon"
+                   Margin="0" />
+        <TextBlock Text="{Binding Pokemon.PokeonEliminar}"
+                   Foreground="Red"
+                   FontWeight="Light"
+                   FontSize="30"
+                   Margin="0"
+                   HorizontalAlignment="Center" />
+        <Image Width="200"
+               Margin="0,30"
+               Source="/Assets/pikacutriste.png" />
         <WrapPanel Grid.Row="2"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center">
             <Button Tag="{StaticResource Color1}"
                     Style="{StaticResource EstilosAgregarCancelar}"
                     Command="{Binding EliminarPokemonCommand}">
-                <TextBlock Text="Agregar"
+                <TextBlock Text="Eliminar"
                            Foreground="White"
                            VerticalAlignment="Center"
                            FontSize="20"
@@ -33,5 +44,5 @@
                            FontWeight="Light" />
             </Button>
         </WrapPanel>
-    </Grid>
+    </StackPanel>
 </UserControl>

@@ -19,14 +19,24 @@ namespace Pokedex.Models
                     return $"N.º 0{Numero}";
                 else
                     return $"N.º {Numero}";
-
-
             }
-
-
+            
 
         }
 
-
+       public string NombreCompleto
+        {
+            get
+            {
+                return $"{Nombre} {NumeroCompleto}";
+            }
+        }
+      public string PokeonEliminar
+        {
+            get
+            {
+                return $"¿Está seguro que desea eliminar este pokémon: {Nombre.ToUpper()}?";
+            }
+        }
     }
 }

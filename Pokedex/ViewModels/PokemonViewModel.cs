@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace Pokedex.ViewModels
 {
-   public class PokemonViewModel:INotifyPropertyChanged
+    public class PokemonViewModel : INotifyPropertyChanged
     {
 
         public ObservableCollection<Entrenadores> ListaEntrenadores { get; set; } = new();
@@ -21,18 +21,17 @@ namespace Pokedex.ViewModels
         public ObservableCollection<Tipos> ListaTipos { get; set; } = new();
 
         EntrenadoresCatalogo centrenadores = new();
-        
-        PokemonCatalogo cpokemon = new();
 
+        PokemonCatalogo cpokemon = new();
 
         public Entrenadores Entrenador { get; set; } = new();
         public Pokemones Pokemon { get; set; } = new();
 
-
+        public bool MostrarErrores { get; set; } = false;
         public Vista Vista { get; set; }
 
         public string Error { get; set; } = "";
-        
+
         public ICommand VerAgregarPokemonCommand { get; set; }
         public ICommand AgregarPokemonCommand { get; set; }
         public ICommand RegresarCommand { get; set; }
@@ -40,6 +39,7 @@ namespace Pokedex.ViewModels
         public ICommand EliminarPokemonCommand { get; set; }
         public ICommand GetPokemonsCommand { get; set; }
         public ICommand VerPokemonCommand { get; set; }
+        public ICommand MostrarErroresCommad { get; set; }
         public PokemonViewModel()
         {
             VerAgregarPokemonCommand = new RelayCommand(VerAgregarPokemon);
@@ -52,6 +52,7 @@ namespace Pokedex.ViewModels
             VerEliminarPokemonCommand = new RelayCommand(VerEliminarPokemon);
             EliminarPokemonCommand = new RelayCommand(EliminarPokemon);
 
+            MostrarErroresCommad = new RelayCommand<string>(MostrarErroresMetodo);
 
             GetEntrenadores();
 
@@ -62,14 +63,26 @@ namespace Pokedex.ViewModels
 
         }
 
+        private void MostrarErroresMetodo(string obj)
+        {
+            if (obj == "Si")
+                MostrarErrores = true;
+            else
+                MostrarErrores = false;
+
+            Actualizar();
+
+        }
+
         private void EliminarPokemon()
         {
-            if(Entrenador != null && Pokemon != null) 
+            if (Entrenador != null && Pokemon != null)
             {
                 cpokemon.Delete(Pokemon);
                 GetPokemones(Pokemon.Entrenador.Id);
+                GetEntrenadores();
                 Regresar();
-            
+
             }
         }
 
@@ -84,9 +97,11 @@ namespace Pokedex.ViewModels
 
         private void AgregarPokemon(int id)
         {
-            if(Pokemon is not null && Entrenador is not null) 
+            if (Pokemon is not null && Entrenador is not null)
             {
-                if(cpokemon.Validar(Pokemon, out List<string> errores))
+                MostrarErrores = false;
+                Error = "";
+                if (cpokemon.Validar(Pokemon, out List<string> errores))
                 {
 
                     Pokemon.TipoId = id;
@@ -96,12 +111,19 @@ namespace Pokedex.ViewModels
                     cpokemon.Create(Pokemon);
 
                     GetPokemones(Entrenador.Id);
+                    
+                    GetEntrenadores();
 
                     Regresar();
                 }
                 else
                 {
-
+                    MostrarErrores = true;
+                    foreach (var item in errores)
+                    {
+                        Error = $"{Error} {item} {Environment.NewLine}";
+                    }
+                    Actualizar();
                 }
             }
 
@@ -110,6 +132,8 @@ namespace Pokedex.ViewModels
         private void Regresar()
         {
             Vista = Vista.VerPokemons;
+            MostrarErrores = false;
+            Error = "";
             Actualizar();
         }
 
@@ -125,6 +149,7 @@ namespace Pokedex.ViewModels
             if (Entrenador is not null)
             {
                 Vista = Vista.AgregarPokemon;
+                Error = "";
                 Pokemon = new();
                 GetTipos();
                 Actualizar();

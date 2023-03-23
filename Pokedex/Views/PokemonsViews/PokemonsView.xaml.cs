@@ -31,7 +31,7 @@ namespace Pokedex.Views.PokemonsViews
             if (cmbEntrenador.SelectedItem != null)
             {
                 var f = this.DataContext as PokemonViewModel;
-                if(f != null)
+                if (f != null)
                     f.GetPokemonsCommand.Execute(cmbEntrenador.SelectedValue);
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pokedex.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,15 @@ namespace Pokedex.Views.PokemonsViews
         public AgregarPokemonView()
         {
             InitializeComponent();
+        }
+
+        private void fondonegro_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var d = this.DataContext as PokemonViewModel;
+            if (d != null)
+            {
+                d.MostrarErroresCommad.Execute("");
+            }
         }
     }
 }

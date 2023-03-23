@@ -10,6 +10,46 @@
                      x:Key="Color3" />
     <SolidColorBrush Color="GhostWhite"
                      x:Key="Color2" />
+    <Style TargetType="Button" x:Key="AgregarPokemon">
+        <Setter Property="Cursor"
+                Value="Hand" />
+        <Setter Property="Background"
+                Value="{StaticResource Color1}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            Padding="0"
+                            Tag="{TemplateBinding Tag}"
+                            CornerRadius="10"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation Storyboard.TargetProperty="Background.Color"
+                                        To="#3b4cca"
+                                        Duration="0:0:0.3" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation Storyboard.TargetProperty="Background.Color"
+                                        To="#cc0000"
+                                        Duration="0:0:0.3" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
     <Style TargetType="RadioButton"
            x:Key="EstilosRadioButton">
         <Setter Property="HorizontalAlignment"
@@ -119,68 +159,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!--#REGION ESTILO SCROLLBAR-->
-    <Style TargetType="ScrollBar">
-        <Setter Property="Margin"
-                Value="0,0,18,0" />
-        <Setter Property="Height"
-                Value="Auto" />
-        <Setter Property="Stylus.IsPressAndHoldEnabled"
-                Value="false" />
-        <Setter Property="Stylus.IsFlicksEnabled"
-                Value="false" />
-        <Setter Property="Foreground"
-                Value="{StaticResource Color1}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ScrollBar}">
-                    <Grid SnapsToDevicePixels="true">
-                        <Track x:Name="PART_Track"
-                               Grid.Column="1"
-                               IsEnabled="{TemplateBinding IsMouseOver}">
-                            <Track.Thumb>
-                                <Thumb>
-                                    <Thumb.Style>
-                                        <Style TargetType="{x:Type Thumb}">
-                                            <Setter Property="OverridesDefaultStyle"
-                                                    Value="true" />
-                                            <Setter Property="IsTabStop"
-                                                    Value="false" />
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type Thumb}">
-                                                        <Rectangle Width="{TemplateBinding Width}"
-                                                                   Height="{TemplateBinding Height}"
-                                                                   Fill="{TemplateBinding Foreground}"
-                                                                   RadiusX="10"
-                                                                   RadiusY="10"
-                                                                   SnapsToDevicePixels="True" />
-                                                        <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsMouseOver"
-                                                                     Value="true">
-                                                                <Setter Property="Foreground"
-                                                                        Value="{StaticResource Color1}" />
-                                                                <Setter Property="Cursor"
-                                                                        Value="Hand" />
-                                                            </Trigger>
-                                                            <Trigger Property="IsDragging"
-                                                                     Value="true">
-                                                                <Setter Property="Foreground"
-                                                                        Value="{StaticResource Color1}" />
-                                                            </Trigger>
-                                                        </ControlTemplate.Triggers>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Thumb.Style>
-                                </Thumb>
-                            </Track.Thumb>
-                        </Track>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <!--#ENDREGION ESTILO SCROLLBAR-->
+ 
 </ResourceDictionary>

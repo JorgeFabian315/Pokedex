@@ -53,7 +53,7 @@
             </Grid.RowDefinitions>
             <Border Grid.RowSpan="3" CornerRadius="0,15,15,0">
                 <Border.Background>
-                    <ImageBrush ImageSource="https://wallpapercave.com/wp/wp2098819.jpg" />
+                    <ImageBrush ImageSource="/Assets/fondo1.jpg" />
                 </Border.Background>
             </Border>
             <Border Background="Black"
@@ -83,8 +83,32 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Grid.Row="2">
+                <Border Background="{StaticResource Color1}" CornerRadius="10"
+                        HorizontalAlignment="Center" Width="800">
+                    <Border.Resources>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding MostrarErrores}"
+                                             Value="true">
+                                    <Setter Property="Visibility"
+                                            Value="Visible" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding MostrarErrores}"
+                                             Value="false">
+                                    <Setter Property="Visibility"
+                                            Value="Hidden" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Resources>
                 <TextBlock Text="{Binding Error}"
-                           Margin="0,10"/>
+                           Margin="0,10"
+                           FontSize="15"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Foreground="{StaticResource Color2}"/>
+                </Border>
                 <WrapPanel Grid.Row="2"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center">

@@ -1,0 +1,149 @@
+﻿<UserControl x:Class="Pokedex.Views.EntrenadoresViews.VerEntrenadorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:local="clr-namespace:Pokedex.Views.EntrenadoresViews"
+             xmlns:cv="clr-namespace:Pokedex.Helpers"
+             mc:Ignorable="d"
+             d:DesignHeight="650"
+             d:DesignWidth="1200">
+    <UserControl.Resources>
+        <cv:ConvertidorPokemon x:Key="cvpokemon" />
+        <cv:ConvertidorTipos x:Key="tiposcolor" />
+        <Style TargetType="Button"
+               x:Key="BotonRegresar">
+            <Setter Property="Background"
+                    Value="Transparent" />
+            <Setter Property="Cursor"
+                    Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="fa:ImageAwesome"
+               x:Key="iconor">
+            <Setter Property="Foreground"
+                    Value="{StaticResource Color3}" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="Foreground"
+                            Value="{StaticResource Color3}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="Transparent">
+        <TextBlock Text="{Binding Entrenador.Nombre}"
+                   FontSize="70"
+                   FontWeight="Light"
+                   Margin="25,70,0,0" />
+        <Border HorizontalAlignment="Center"
+                Height="500"
+                Width="300"
+                CornerRadius="10"
+                VerticalAlignment="Center"
+                Background="GhostWhite">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" />
+            </Border.Effect>
+            <StackPanel Margin="20">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin"
+                                Value="0,5" />
+                        <Setter Property="FontSize"
+                                Value="20" />
+                        <Setter Property="HorizontalAlignment"
+                                Value="Left" />
+                        <Setter Property="VerticalAlignment"
+                                Value="Center" />
+                        <Setter Property="FontFamily"
+                                Value="Poppins" />
+                        <Setter Property="FontWeight"
+                                Value="Light" />
+                    </Style>
+                </StackPanel.Resources>
+                <WrapPanel>
+                    <TextBlock Text="Edad: " />
+                    <TextBlock Text="{Binding Entrenador.Edad}"
+                               FontWeight="SemiBold" />
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBlock Text="Sexo: " />
+                    <TextBlock Text="{Binding Sexo}"
+                               FontWeight="SemiBold" />
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBlock Text="Primer Pokémon capturado: " />
+                    <TextBlock Text="{Binding PrimerPokemon}"
+                               FontWeight="SemiBold" />
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBlock Text="Pokémon más pesado: " />
+                    <TextBlock Text="{Binding PokemonMaspesado}"
+                               FontWeight="SemiBold" />
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBlock Text="Pokémon registrados: " />
+                    <TextBlock FontWeight="SemiBold"
+                               Text="{Binding PokemonsRegistrados}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBlock Text="Pokémon faltantes: " />
+                    <TextBlock Text="{Binding PokemonsFaltantes}"
+                               FontWeight="SemiBold" />
+                </WrapPanel>
+            </StackPanel>
+        </Border>
+        <ItemsControl ItemsSource="{Binding ListaPokemonXEntrenadores}"
+                      HorizontalAlignment="Right"
+                      Margin="0,40,10,0"
+                      VerticalAlignment="Top">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="170"
+                            Background="{Binding Tipo.Nombre,Converter={StaticResource tiposcolor}}"
+                            Height="170"
+                            Margin="10,5"
+                            CornerRadius="10">
+                        <StackPanel>
+                            <Image Width="140"
+                                   Source="{Binding Numero,Converter={StaticResource cvpokemon}}" />
+                            <TextBlock Text="{Binding Nombre}"
+                                       FontSize="20"
+                                       HorizontalAlignment="Center"
+                                       Foreground="white"
+                                       FontWeight="Light" />
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Button Width="40"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="10"
+                Height="40"
+                Style="{StaticResource BotonRegresar}"
+                Command="{Binding RegresarCommand}">
+            <fa:ImageAwesome Icon="ArrowLeft"
+                             Style="{StaticResource iconor}" />
+        </Button>
+    </Grid>
+</UserControl>

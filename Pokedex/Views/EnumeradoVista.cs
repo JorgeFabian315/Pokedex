@@ -15,6 +15,7 @@ namespace Pokedex.Views
         EliminarPokemon,
         EditarPokemon,
         VerEntrenadores,
+        VerEntrenador,
         AgregarEntrenadores,
         VerEliminarEntrenador
     };

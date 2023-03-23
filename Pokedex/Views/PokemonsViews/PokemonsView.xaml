@@ -6,32 +6,79 @@
              xmlns:local="clr-namespace:Pokedex.Views.PokemonsViews"
              xmlns:cv="clr-namespace:Pokedex.Helpers"
              mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="800"
+             d:DesignHeight="650"
+             d:DesignWidth="1200"
              x:Name="varibalepoke">
     <UserControl.Resources>
         <cv:ConvertidorPokemon x:Key="cvpokemon" />
         <cv:ConvertidorTipos x:Key="tiposcolor" />
     </UserControl.Resources>
-    <DockPanel>
+    <DockPanel Margin="0,10,0,0">
         <WrapPanel DockPanel.Dock="Top">
+            <TextBlock Text="Entrenadores:"
+                       FontSize="35"
+                       Margin="30,0,30,0"
+                       Style="{StaticResource TitulosPoke}" />
             <ComboBox ItemsSource="{Binding ListaEntrenadores}"
                       Width="400"
+                      FontSize="25"
+                      VerticalContentAlignment="Center"
+                      Cursor="Hand"
+                      FontWeight="Light"
                       Name="cmbEntrenador"
                       SelectedValuePath="Id"
                       SelectionChanged="cmbEntrenador_SelectionChanged"
-                      DisplayMemberPath="Nombre"
                       SelectedItem="{Binding Entrenador}"
-                      Height="50"></ComboBox>
+                      Height="50">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="400">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".5*"/>
+                                <ColumnDefinition Width=".5*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Nombre}"
+                                        />
+                            <WrapPanel Grid.Column="1">
+                                <TextBlock Text="Pokémon: " />
+                                <TextBlock Text="{Binding Pokemones.Count}" />
+                            </WrapPanel>
+                             </Grid>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <Button Width="200"
+                    Height="70"
+                    Margin="20,0,0,0"
+                    Style="{StaticResource AgregarPokemon}"
                     Command="{Binding VerAgregarPokemonCommand}">
-                <TextBlock Text="Agregar pokemon"/>
+                <WrapPanel>
+                    <Image Source="/Assets/pokebola.png"
+                           Width="50"/>
+                    <StackPanel Margin="15,0,0,0">
+                        <TextBlock Text="Agregar"
+                                   Foreground="white"
+                                   FontSize="17"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   FontWeight="Light"
+                                   VerticalAlignment="Center"
+                                   Margin="0" />
+                        <TextBlock Text="Pokemon"
+                                   Foreground="white"
+                                   FontSize="20"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   FontWeight="Light"
+                                   VerticalAlignment="Center"
+                                   Margin="0" />
+                    </StackPanel>
+                     </WrapPanel>
             </Button>
         </WrapPanel>
-      
-        <ScrollViewer>
+        <ScrollViewer Margin="30,20,0,0">
             <ItemsControl ItemsSource="{Binding ListaPokemons}"
-                          HorizontalAlignment="Center">
+                          HorizontalAlignment="Left">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel />
@@ -40,7 +87,33 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Background="Transparent"
-                              Margin="20,10">
+                              Cursor="Hand"
+                              Margin="20,5">
+                            <Grid.RenderTransform>
+                                <TranslateTransform X="0" Y="0" x:Name="traslacion"/>
+                            </Grid.RenderTransform>
+                            <Grid.Triggers>
+                                <EventTrigger RoutedEvent="MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="traslacion"
+                                                             Storyboard.TargetProperty="Y"
+                                                            Duration="0:0:0.3" To="-50"/>
+                                            <DoubleAnimation Storyboard.TargetName="traslacion"
+                                                             Storyboard.TargetProperty="Y"
+                                                             Duration="0:0:0.3"
+                                                             To="50" />
+                                            <DoubleAnimation Storyboard.TargetName="traslacion"
+                                                             Storyboard.TargetProperty="Y"
+                                                             Duration="0:0:0.3"
+                                                             To="0" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                
+                            </Grid.Triggers>
+                            
+                            
                             <Grid.InputBindings>
                                 <MouseBinding Gesture="LeftClick"
                                               CommandParameter="{Binding .}"
@@ -50,20 +123,8 @@
                                     Width="200"
                                     Height="170"
                                     Margin="0,120,0,0"
-                                    CornerRadius="10">
-                                <StackPanel Margin="0,60,0,0"
-                                            HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding NumeroCompleto}"
-                                               HorizontalAlignment="Center"
-                                               FontSize="20"
-                                               Foreground="White"
-                                               FontWeight="Light" />
-                                    <TextBlock Text="{Binding Nombre}"
-                                               HorizontalAlignment="Center"
-                                               FontSize="28"
-                                               Foreground="White"
-                                               FontWeight="Light" />
-                                    <!--<Border CornerRadius="10"
+                                    CornerRadius="10" />
+                            <!--<Border CornerRadius="10"
                                             Background="{Binding Tipo.Nombre,Converter={StaticResource tiposcolor}}"
                                             Height="25"
                                             Margin="0,15,0,0"
@@ -75,12 +136,23 @@
                                                    Foreground="White"
                                                    FontWeight="Light" />
                                     </Border>-->
-                                </StackPanel>
-                            </Border>
-                            <Image Source="{Binding Numero, Converter={StaticResource cvpokemon}}"
-                                   Width="200"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Top" />
+                            <StackPanel>
+                                <Image Source="{Binding Numero, Converter={StaticResource cvpokemon}}"
+                                       Width="180"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Top" />
+                                <TextBlock Text="{Binding NumeroCompleto}"
+                                           HorizontalAlignment="Center"
+                                           FontSize="20"
+                                           Foreground="White"
+                                           FontWeight="Light" />
+                                <TextBlock Text="{Binding Nombre}"
+                                           HorizontalAlignment="Center"
+                                           FontSize="28"
+                                           Foreground="White"
+                                           FontWeight="Light" />
+                            </StackPanel>
+                           
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

@@ -27,14 +27,18 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type VM:PokemonViewModel}">
             <local:IndexPokemonsView />
-        </DataTemplate>        
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type VM:AccionesEntrenadorViewModel}">
+            <local:IndexAccionesEntrenadorView />
+        </DataTemplate>
     </Window.Resources>
    
     <Grid Background="Transparent">
         <Border CornerRadius="15"
-                Background="GhostWhite" BorderThickness="0"/>
+                Background="White" BorderThickness="0"/>
         <ContentControl Width="1130"
                         Margin="0"
+                       PreviewMouseLeftButtonDown="ContentControl_PreviewMouseLeftButtonDown"
                         HorizontalAlignment="Right"
                         Content="{Binding ViewModelActual}" />
         <Grid Width="70"
@@ -53,6 +57,7 @@
                           Margin="20,0,0,20"
                           Background="Transparent"
                           BorderThickness="0"
+                          Name="tbtMenu"
                           Height="30">
                     <ToggleButton.Resources>
                         <Style TargetType="ToggleButton">
@@ -110,14 +115,15 @@
                     <fa:ImageAwesome Icon="Ban"
                                      Style="{StaticResource IconosInicio}" />
                     <TextBlock Style="{StaticResource Titulos}"
-                               Text="Pokemons" />
+                               Text="Pokémon" />
                 </WrapPanel>
             </RadioButton>
-            <RadioButton Style="{StaticResource EstilosRadioButton}">
+            <RadioButton Style="{StaticResource EstilosRadioButton}"
+                             Command="{Binding AccionesEntrenadorViewModelCommand}">
                 <WrapPanel>
-                    <fa:ImageAwesome Icon="Battery4"
+                    <fa:ImageAwesome Icon="File"
                                      Style="{StaticResource IconosInicio}" />
-                    <TextBlock Text="Clasificación"
+                    <TextBlock Text="Registros"
                                Style="{StaticResource Titulos}" />
                 </WrapPanel>
             </RadioButton>
@@ -128,7 +134,7 @@
                     <WrapPanel>
                         <fa:ImageAwesome Icon="PowerOff"
                                          Style="{StaticResource IconosInicio}" />
-                        <TextBlock Text="Apagar"
+                        <TextBlock Text="Cerrar"
                                    Style="{StaticResource Titulos}" />
                     </WrapPanel>
                 </RadioButton>

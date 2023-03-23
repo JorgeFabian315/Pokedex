@@ -10,6 +10,7 @@
     <UserControl.Resources>
         <views:EntrenadoresView x:Key="EntrenadoresView"/>
         <views:AgregarEntrenadorView x:Key="AgregarEntrenador"/>
+        <views:VerEntrenadorView x:Key="VerEntrenador" />
         <views:EliminarEntrenadorView x:Key="EliminarEntrenador" />
     </UserControl.Resources>
     <Grid>
@@ -33,6 +34,11 @@
                                      Value="{x:Static local:Vista.VerEliminarEntrenador}">
                             <Setter Property="Content"
                                     Value="{StaticResource EliminarEntrenador}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Vista}"
+                                     Value="{x:Static local:Vista.VerEntrenador}">
+                            <Setter Property="Content"
+                                    Value="{StaticResource VerEntrenador}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

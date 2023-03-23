@@ -9,14 +9,25 @@
 
   <ItemGroup>
     <None Remove="Assets\entrenador.png" />
-    <None Remove="Assets\Femenino.jpg" />
-    <None Remove="Assets\Masculino.jpg" />
+    <None Remove="Assets\Femenino.png" />
+    <None Remove="Assets\fondo1.jpg" />
+    <None Remove="Assets\Masculino.png" />
     <None Remove="Assets\pikacutriste.png" />
     <None Remove="Assets\pokebola.png" />
     <None Remove="Assets\Pokemon.ttf" />
+    <None Remove="Views\PokemonsViews\foz5ecoh.s2n~" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Femenino.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\fondo1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Masculino.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\pikacutriste.png" />
   </ItemGroup>
 
@@ -33,12 +44,6 @@
 
   <ItemGroup>
     <Resource Include="Assets\entrenador.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\Femenino.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\Masculino.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\pokebola.png">

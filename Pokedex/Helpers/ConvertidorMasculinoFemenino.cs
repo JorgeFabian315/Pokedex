@@ -15,9 +15,9 @@ namespace Pokedex.Helpers
             string valor = (string)value;
 
             if (valor == "M")
-                return "/Assets/Masculino.jpg";
+                return "/Assets/Masculino.png";
             else
-                return "/Assets/Femenino.jpg";
+                return "/Assets/Femenino.png";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -34,5 +34,10 @@ namespace Pokedex.Views
         {
             Application.Current.Shutdown();
         }
+
+        private void ContentControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            tbtMenu.IsChecked = false;
+        }
     }
 }

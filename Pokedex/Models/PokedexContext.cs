@@ -15,6 +15,8 @@ public partial class PokedexContext : DbContext
     {
     }
 
+    public virtual DbSet<Accionesentrenadores> Accionesentrenadores { get; set; }
+
     public virtual DbSet<Entrenadores> Entrenadores { get; set; }
 
     public virtual DbSet<Pokemones> Pokemones { get; set; }
@@ -30,6 +32,19 @@ public partial class PokedexContext : DbContext
         modelBuilder
             .UseCollation("utf8mb4_0900_ai_ci")
             .HasCharSet("utf8mb4");
+
+        modelBuilder.Entity<Accionesentrenadores>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("accionesentrenadores");
+
+            entity.Property(e => e.Fecha)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Observacion).HasMaxLength(100);
+            entity.Property(e => e.Usuario).HasMaxLength(100);
+        });
 
         modelBuilder.Entity<Entrenadores>(entity =>
         {

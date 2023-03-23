@@ -16,6 +16,7 @@ namespace Pokedex.ViewModels
     public class EntrenadorViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Entrenadores> ListaEntrenadores { get; set; } = new();
+        public ObservableCollection<Pokemones> ListaPokemonXEntrenadores { get; set; } = new();
 
         EntrenadoresCatalogo centrenadores = new();
 
@@ -23,6 +24,13 @@ namespace Pokedex.ViewModels
 
         public bool MostrarErrores { get; set; } = false;
 
+        public int TotalEntrenadores { get; set; }
+        public string PrimerPokemon { get; set; } = "";
+        public string PokemonMaspesado { get; set; } = "";
+        public string Sexo { get; set; } = "";
+
+        public int PokemonsRegistrados { get; set; }
+        public int PokemonsFaltantes { get; set; }
         public Vista Vista { get; set; }
 
         public string Error { get; set; } = "";
@@ -32,6 +40,7 @@ namespace Pokedex.ViewModels
         public ICommand VerEliminarEntrenadorCommand { get; set; }
         public ICommand EliminarEntrenadorCommand { get; set; }
         public ICommand MostrarErroresCommand { get; set; }
+        public ICommand VerEntrenadorCommand { get; set; }
 
 
         public EntrenadorViewModel()
@@ -44,17 +53,41 @@ namespace Pokedex.ViewModels
             VerEliminarEntrenadorCommand = new RelayCommand<int>(VerEliminarEntrenador);
             EliminarEntrenadorCommand = new RelayCommand(EliminarEntrenador);
 
+            TotalEntrenadores = ListaEntrenadores.Count;
 
+            VerEntrenadorCommand = new RelayCommand<Entrenadores>(VerEntrenador);
+            Actualizar();
+        }
+
+        private void VerEntrenador(Entrenadores obj)
+        {
+            Entrenador = obj;
+            Vista = Vista.VerEntrenador;
+            ListaPokemonXEntrenadores.Clear();
+            foreach (var x in centrenadores.GetPokemonesEntrenador(Entrenador.Id))
+            {
+                ListaPokemonXEntrenadores.Add(x);
+            }
+            PrimerPokemon = centrenadores.GetPrimerPokemon(Entrenador.Id);
+            PokemonMaspesado = centrenadores.GetPokemonMasPesado(Entrenador.Id);
+            PokemonsRegistrados = Entrenador.Pokemones.Count();
+            PokemonsFaltantes = 1008 - Entrenador.Pokemones.Count();
+
+            if (Entrenador.Sexo == "M")
+                Sexo = "Masculino";
+            else
+                Sexo = "Femenino";
 
             Actualizar();
         }
 
         private void EliminarEntrenador()
         {
-            if(Entrenador is not null)
+            if (Entrenador is not null)
             {
                 centrenadores.Delete(Entrenador);
                 GetEntrenadores();
+                TotalEntrenadores = ListaEntrenadores.Count;
                 Actualizar();
                 Regresar();
             }
@@ -70,31 +103,39 @@ namespace Pokedex.ViewModels
         private void Regresar()
         {
             Vista = Vista.VerEntrenadores;
+            MostrarErrores = false;
             Actualizar();
         }
 
         private void AgregarEntrenador(string sexo)
         {
 
-            if(Entrenador != null) 
+            if (Entrenador != null)
             {
                 Error = "";
                 if (centrenadores.ValidarEntrenador(Entrenador, out List<string> errores))
                 {
+                    MostrarErrores = false;
+
                     if (sexo == "Masculino")
                         Entrenador.Sexo = "M";
                     else
                         Entrenador.Sexo = "F";
 
                     centrenadores.Create(Entrenador);
+
                     GetEntrenadores();
+
+                    TotalEntrenadores = ListaEntrenadores.Count;
+
                     Regresar();
                 }
                 else
                 {
+                    MostrarErrores = true;
                     foreach (var item in errores)
                     {
-                        Error = $"{Error} {Environment.NewLine} {item}";
+                        Error = $"{Error} {item} {Environment.NewLine}";
                     }
                     Actualizar();
                 }
