@@ -106,7 +106,9 @@
                     </StackPanel.Resources>
                     <WrapPanel>
                         <TextBlock Text="Peso:"/>
-                        <TextBlock Text="{Binding Pokemon.Peso}"/>
+                        <TextBlock>
+                            <Run Text="{Binding Pokemon.Peso}" />
+                            <Run Text="kg"/></TextBlock>
                     </WrapPanel>
                     <WrapPanel>
                         <TextBlock Text="Habilidad:" />
